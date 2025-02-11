@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knot Game - Play</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Knot Game</h1>
+    <div id="game-board"></div>
+    <script src="knots.js"></script>
+    <script>
+        // Parse query parameters for size and knot
+        const params = new URLSearchParams(window.location.search);
+        const size = parseInt(params.get('size'));
+        const knot = params.get('knot');
+
+        // Define board layouts for different knots
+        const boardLayouts = {
+            'Figure-8': [
+                'T0.png', 'T0.png', 'T6.png', 'T5.png', 'T0.png',
+                'T0.png', 'T7.png', 'T1.png', 'T8.png', 'T0.png',
+                'T6.png', 'T3.png', 'T0.png', 'T4.png', 'T5.png',
+                'T0.png', 'T7.png', 'T2.png', 'T8.png', 'T0.png',
+                'T0.png', 'T0.png', 'T6.png', 'T5.png', 'T0.png',
+            ],
+            'Trefoil': [
+                // Define a Trefoil knot layout for 5x5
+            ],
+            'Hopf Link': [
+                // Define a Hopf Link knot layout for 5x5
+            ],
+            '7_2 knot': [
+                
+                // Define a Complex Knot layout for 6x6
+            ],
+            'Complex Knot 2': [
+                // Define another Complex Knot layout for 6x6
+            ],
+        };
+
+        // Dynamically set board size and layout
+        const gameBoard = document.getElementById('game-board');
+        const knotLayout = boardLayouts[knot];
+        if (knotLayout) {
+            knotLayout.forEach((tile, index) => {
+                const tileElement = document.createElement('div');
+                tileElement.classList.add('tile');
+
+                const imgElement = document.createElement('img');
+                imgElement.src = tile;
+                imgElement.alt = `Tile ${index + 1}`;
+                tileElement.appendChild(imgElement);
+
+                // Add click functionality for toggleable tiles
+                if (['T1.png', 'T2.png', 'T3.png', 'T4.png'].includes(tile)) {
+                    tileElement.addEventListener('click', () => {
+                        const toggleTiles = ['T1.png', 'T2.png', 'T3.png', 'T4.png'];
+                        const currentIndex = toggleTiles.indexOf(tile);
+                        const nextIndex = (currentIndex + 1) % toggleTiles.length;
+                        imgElement.src = toggleTiles[nextIndex];
+                    });
+                }
+
+                gameBoard.appendChild(tileElement);
+            });
+        }
+    </script>
+</body>
+</html>
