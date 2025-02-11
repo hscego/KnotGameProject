@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knot Game - Main Page</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Knot Game</h1>
+    <h3>by Ashley Esparanza and Hannah Scego</h3>
+    <h2>Select a Board Size</h2>
+    <div id="board-selection">
+        <button class="board-btn" onclick="selectBoard(5)">5x5 Board</button>
+        <button class="board-btn" onclick="selectBoard(6)">6x6 Board</button>
+    </div>
+    <script>
+        function selectBoard(size) {
+            const knots = size === 5 ? ['Figure-8', 'Trefoil', 'Hopf Link'] : ['Complex Knot 1', 'Complex Knot 2'];
+            const options = knots.map((knot, index) =>
+                `<button class="knot-btn" onclick="startGame(${size}, '${knot}')">${knot}</button>`
+            ).join('');
+            document.body.innerHTML = `
+                <h1>Knot Game</h1>
+                <h2>Select a Knot for the ${size}x${size} Board</h2>
+                <div id="knot-selection">${options}</div>
+            `;
+        }
+
+        function startGame(size, knot) {
+            window.location.href = `game.html?size=${size}&knot=${knot}`;
+        }
+    </script>
+</body>
+</html>
